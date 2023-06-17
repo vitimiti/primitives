@@ -25,6 +25,8 @@
 #ifndef VITI_PRIMITIVES_SIZE_HPP
 #define VITI_PRIMITIVES_SIZE_HPP
 
+#include <cmath>
+#include <limits>
 #include <ostream>
 #include <string>
 
@@ -35,15 +37,25 @@ template <concepts::integral_or_floating_point Type>
 struct size {
   Type width;
   Type height;
-
-  constexpr friend auto operator==(size<Type> const& lhs, size<Type> const& rhs)
-      -> bool = default;
 };
 
 template <concepts::integral_or_floating_point Type>
 constexpr auto to_string(primitives::size<Type>& size) -> std::string {
   return {"(" + std::to_string(size.width) + ", " +
           std::to_string(size.height) + ")"};
+}
+
+template <concepts::integral_or_floating_point Type>
+constexpr auto operator==(size<Type> const& lhs, size<Type> const& rhs)
+    -> bool {
+  if constexpr (std::is_floating_point_v<Type>) {
+    return std::abs(lhs.width - rhs.width) <
+               std::numeric_limits<Type>::epsilon() &&
+           std::abs(lhs.height - rhs.height) <
+               std::numeric_limits<Type>::epsilon();
+  } else {
+    return lhs.width == rhs.width && lhs.height == rhs.height;
+  }
 }
 
 template <concepts::integral_or_floating_point Type>

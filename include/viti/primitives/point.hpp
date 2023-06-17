@@ -25,6 +25,8 @@
 #ifndef VITI_PRIMITIVES_POINT_HPP
 #define VITI_PRIMITIVES_POINT_HPP
 
+#include <cmath>
+#include <limits>
 #include <ostream>
 #include <string>
 
@@ -35,14 +37,22 @@ template <concepts::integral_or_floating_point Type>
 struct point {
   Type x;
   Type y;
-
-  constexpr friend auto operator==(point<Type> const& lhs,
-                                   point<Type> const& rhs) -> bool = default;
 };
 
 template <concepts::integral_or_floating_point Type>
 constexpr auto to_string(primitives::point<Type>& point) -> std::string {
   return {"(" + std::to_string(point.x) + ", " + std::to_string(point.y) + ")"};
+}
+
+template <concepts::integral_or_floating_point Type>
+constexpr auto operator==(point<Type> const& lhs, point<Type> const& rhs)
+    -> bool {
+  if constexpr (std::is_floating_point_v<Type>) {
+    return std::abs(lhs.x - rhs.x) < std::numeric_limits<Type>::epsilon() &&
+           std::abs(lhs.y - rhs.y) < std::numeric_limits<Type>::epsilon();
+  } else {
+    return lhs.x == rhs.x && lhs.y == rhs.y;
+  }
 }
 
 template <concepts::integral_or_floating_point Type>
