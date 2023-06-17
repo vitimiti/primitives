@@ -1,0 +1,12 @@
+{
+    "sonarlint.pathToCompileCommands": "${workspaceFolder}/build/${command:cmake.activeConfigurePresetName}/compile_commands.json",
+    "files.associations": {
+        "*.vertexshader": "glsl",
+        "*.fragmentshader": "glsl",
+        "*.md": "markdown",
+        "*.wrap": "ini",
+        "*.cpp": "cpp",
+        "concepts": "cpp",
+        "type_traits": "cpp"
+    }
+}
