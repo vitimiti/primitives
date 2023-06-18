@@ -43,7 +43,7 @@ IncludeCategories:
     Priority: 3
     SortPriority: 3
     CaseSensitive: true
-  - Regex: '^"viti'
+  - Regex: '^"viti/primitives'
     Priority: 4
     SortPriority: 4
     CaseSensitive: true

@@ -24,32 +24,35 @@
 
 cmake_minimum_required(VERSION 3.25)
 project(
-  vitimiti_primitives
-  VERSION 1.0.0
-  DESCRIPTION "Templated library with primitive shapes"
-  HOMEPAGE_URL "https://github.com/vitimiti/primitives"
-  LANGUAGES CXX)
+        vitimiti_primitives
+        VERSION 1.0.0
+        DESCRIPTION "Templated library with primitive shapes"
+        HOMEPAGE_URL "https://github.com/vitimiti/primitives"
+        LANGUAGES CXX)
 
-list(APPEND ${PROJECT_NAME}_PUBLIC_HEADERS
-     ${PROJECT_SOURCE_DIR}/include/viti/primitives/point.hpp
-     ${PROJECT_SOURCE_DIR}/include/viti/primitives/size.hpp)
+list(
+        APPEND
+        ${PROJECT_NAME}_PUBLIC_HEADERS
+        ${PROJECT_SOURCE_DIR}/include/viti/primitives/point.hpp
+        ${PROJECT_SOURCE_DIR}/include/viti/primitives/rectangle.hpp
+        ${PROJECT_SOURCE_DIR}/include/viti/primitives/size.hpp)
 
 add_library(${PROJECT_NAME} INTERFACE)
 target_sources(${PROJECT_NAME} INTERFACE FILE_SET HEADERS FILES
-                                         ${${PROJECT_NAME}_PUBLIC_HEADERS})
+        ${${PROJECT_NAME}_PUBLIC_HEADERS})
 
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_20)
 target_include_directories(
-  ${PROJECT_NAME}
-  INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDE_DIRS}>
-            ${vitimiti_concepts_SOURCE_DIR}/include)
+        ${PROJECT_NAME}
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDE_DIRS}>
+        ${vitimiti_concepts_SOURCE_DIR}/include)
 
-if(${PROJECT_IS_TOP_LEVEL})
-  add_subdirectory(vendor)
-  list(APPEND CMAKE_MODULE_PATH ${vitimiti_cmake_modules_SOURCE_DIR}/cmake)
-  include(DefaultCompilerOptions REQUIRED)
-  target_set_default_compile_options(${PROJECT_NAME} INTERFACE ON)
-  set_target_properties(${PROJECT_NAME} PROPERTIES VERIFY_INTERFACE_HEADER_SETS
-                                                   ON)
-endif()
+if (${PROJECT_IS_TOP_LEVEL})
+    add_subdirectory(vendor)
+    list(APPEND CMAKE_MODULE_PATH ${vitimiti_cmake_modules_SOURCE_DIR}/cmake)
+    include(DefaultCompilerOptions REQUIRED)
+    target_set_default_compile_options(${PROJECT_NAME} INTERFACE ON)
+    set_target_properties(${PROJECT_NAME} PROPERTIES VERIFY_INTERFACE_HEADER_SETS
+            ON)
+endif ()
