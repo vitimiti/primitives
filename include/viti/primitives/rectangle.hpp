@@ -38,8 +38,8 @@
 namespace viti::primitives {
 template <concepts::integral_or_floating_point Type>
 struct rectangle {
-  point<Type>            initial_point;
-  primitives::size<Type> size;
+  primitives::point<Type> point;
+  primitives::size<Type>  size;
 
   constexpr friend auto operator==(rectangle<Type> const& lhs,
                                    rectangle<Type> const& rhs)
@@ -47,10 +47,16 @@ struct rectangle {
 };
 
 template <concepts::integral_or_floating_point Type>
-constexpr auto to_string(primitives::rectangle<Type>& rectangle)
-    -> std::string {
-  return {"(" + std::to_string(rectangle.initial_point) + ", " +
+[[nodiscard]] constexpr auto
+to_string(primitives::rectangle<Type> const& rectangle) -> std::string {
+  return {"(" + std::to_string(rectangle.point) + ", " +
           std::to_string(rectangle.size) + ")"};
+}
+
+template <concepts::integral_or_floating_point Type>
+[[nodiscard]] constexpr auto
+is_empty(primitives::rectangle<Type> const& rectangle) -> bool {
+  return rectangle.size.width <= 0 || rectangle.size.height <= 0;
 }
 
 template <concepts::integral_or_floating_point Type>

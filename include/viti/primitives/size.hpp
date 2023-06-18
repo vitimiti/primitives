@@ -40,7 +40,8 @@ struct size {
 };
 
 template <concepts::integral_or_floating_point Type>
-constexpr auto to_string(primitives::size<Type>& size) -> std::string {
+[[nodiscard]] constexpr auto to_string(primitives::size<Type>& size)
+    -> std::string {
   return {"(" + std::to_string(size.width) + ", " +
           std::to_string(size.height) + ")"};
 }

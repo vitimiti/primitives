@@ -40,7 +40,8 @@ struct point {
 };
 
 template <concepts::integral_or_floating_point Type>
-constexpr auto to_string(primitives::point<Type>& point) -> std::string {
+[[nodiscard]] constexpr auto to_string(primitives::point<Type>& point)
+    -> std::string {
   return {"(" + std::to_string(point.x) + ", " + std::to_string(point.y) + ")"};
 }
 
